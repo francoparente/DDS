@@ -1,10 +1,10 @@
-interface Encomienda {
+interface Distribuible {
     int peso();
 
     boolean esPequenio();
 }
 
-class Paquete implements Encomienda {
+class Paquete implements Distribuible {
     int volumen;
     int peso;
 
@@ -26,7 +26,7 @@ class Paquete implements Encomienda {
     }
 }
 
-class Carta implements Encomienda {
+class Carta implements Distribuible {
     int cantidadDeLineas;
 
     Carta(int cantidadDeLineas) {
@@ -43,5 +43,24 @@ class Carta implements Encomienda {
 
     public boolean esLiviano() {
         return true;
+    }
+}
+
+// ----------------------
+
+class EnvioCortaDistancia {
+    Ciudad origen;
+
+    EnvioCortaDistancia(Ciudad origen) {
+        this.origen = origen;
+    }
+
+    boolean puedeEnviar(Distribuible distribuible, Ciudad destino) {
+        return distribuible.esPequenio()
+                && Math.abs((origen.distancia(destino))) < 200;
+    }
+
+    int costo(Distribuible distribuible, Ciudad destino) {
+        return Math.abs((origen.distancia(destino))) + distribuible.peso();
     }
 }
